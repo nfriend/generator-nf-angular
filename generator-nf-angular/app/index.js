@@ -18,7 +18,7 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
             this.installDependencies({
                 skipInstall: this.options['skip-install'],
                 callback: function () {
-                    this.spawnCommand('grunt');
+                    this.spawnCommand('grunt', ['default']);
                 }.bind(this) // bind the callback to the parent scope
             });
         });

@@ -31,7 +31,7 @@ module.exports = function (grunt) {
                     ],
                     append: [
                       { selector: 'head', html: '<link href="application.css" rel="stylesheet">' },
-                      { selector: 'body', html: '<script src="//localhost:35729/livereload.js"></script>' }
+                      //{ selector: 'body', html: '<script src="//localhost:35729/livereload.js"></script>' }
                     ]
                 },
                 src: 'app/index.html',
@@ -131,8 +131,7 @@ module.exports = function (grunt) {
 
         watch: {
             options: {
-                livereload: true,
-                open: true
+                livereload: true
             },
             build: {
                 files: ['app/**'],
@@ -148,15 +147,19 @@ module.exports = function (grunt) {
             devbuild: {
                 options: {
                     port: 4000,
+                    livereload: true,
+                    open:true,
                     base: 'devbuild/',
-                    hostname: '*'
+                    hostname: 'localhost'
                 }
             },
             build: {
                 options: {
                     port: 4000,
+                    livereload: true,
+                    open: true,
                     base: 'build/',
-                    hostname: '*'
+                    hostname: 'localhost'
                 }
             }
         },
