@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - '0.10'
+before_install:
+  - currentfolder=${PWD##*/}
+  - if [ "$currentfolder" != 'generator-nf-angular' ]; then cd .. && eval "mv $currentfolder generator-nf-angular" && cd generator-nf-angular; fi
+
