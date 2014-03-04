@@ -9,7 +9,6 @@
     "angular-route": "1.x",
     "angular-bootstrap": "~0.10.x",
 	"jquery": "~1.x",
-	"less": "~1.x",
 	"bootstrap": "~3.x",
 	"fontawesome": "4.x"
   }

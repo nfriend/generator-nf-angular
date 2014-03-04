@@ -4,7 +4,7 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
         dom_munger: {
-            build: {
+            dist: {
                 options: {
                     read: [
                       { selector: 'link', attribute: 'href', writeto: 'cssRefs', isPath: true },
@@ -19,7 +19,7 @@ module.exports = function (grunt) {
                     ]
                 },
                 src: 'app/index.html',
-                dest: 'build/index.html'
+                dest: 'dist/index.html'
             },
             devbuild: {
                 options: {
@@ -29,9 +29,9 @@ module.exports = function (grunt) {
                       { selector: 'link', attribute: 'href', writeto: 'cssRefsWithoutPath', isPath: false },
                       { selector: 'script', attribute: 'src', writeto: 'jsRefsWithoutPath', isPath: false }
                     ],
+                    remove: ['link'],
                     append: [
                       { selector: 'head', html: '<link href="application.css" rel="stylesheet">' },
-                      //{ selector: 'body', html: '<script src="//localhost:35729/livereload.js"></script>' }
                     ]
                 },
                 src: 'app/index.html',
@@ -40,10 +40,10 @@ module.exports = function (grunt) {
         },
 
         copy: {
-            build: {
+            dist: {
                 cwd: 'app',
                 src: ['fonts/**', 'images/**'],
-                dest: 'build',
+                dest: 'dist',
                 expand: true
             },
             devbuild: {
@@ -67,30 +67,27 @@ module.exports = function (grunt) {
         },
 
         clean: {
-            build: {
-                src: ['build']
+            dist: {
+                src: ['dist']
             },
             devbuild: {
                 src: ['devbuild']
             },
-            stylesheets: {
-                src: ['devbuild/**/*.css', '!build/application.min.css']
+            devstylesheets: {
+                src: ['devbuild/**/*.css', 'devbuild/**/*.less', 'devbuild/**/*.sass', 'devbuild/**/*.scss', '!devbuild/application.css']
             },
-            scripts: {
-                src: ['devbuild/**/*.js', '!build/application.min.js']
+            diststylesheets: {
+                src: ['dist/**/*.css', 'dist/**/*.less', 'dist/**/*.sass', 'dist/**/*.scss', '!dist/application.min.css']
             },
-            images: {
-                src: ['devbuild/images/**']
-            },
-            fonts: {
-                src: ['devbuild/fonts']
-            },
+            distscripts: {
+                src: ['dist/**/*.js', '!dist/application.min.js']
+            }
         },
 
         less: {
-            build: {
+            dist: {
                 files: {
-                    'build/application.css': 'app/styles/application.less'
+                    'dist/application.css': 'app/styles/application.less'
                 }
             },
             devbuild: {
@@ -101,10 +98,10 @@ module.exports = function (grunt) {
         },
 
         autoprefixer: {
-            build: {
-                cwd: 'build',
+            dist: {
+                cwd: 'dist',
                 src: ['application.css'],
-                dest: 'build',
+                dest: 'dist',
                 expand: true
             },
             devbuild: {
@@ -116,16 +113,16 @@ module.exports = function (grunt) {
         },
 
         cssmin: {
-            build: {
-                src: '<%= dom_munger.data.cssRefs %>',
-                dest: 'build/application.min.css'
+            dist: {
+                src: 'dist/application.css',
+                dest: 'dist/application.min.css'
             }
         },
 
         uglify: {
-            build: {
+            dist: {
                 src: '<%= dom_munger.data.jsRefs %>',
-                dest: 'build/application.min.js'
+                dest: 'dist/application.min.js'
             }
         },
 
@@ -133,9 +130,9 @@ module.exports = function (grunt) {
             options: {
                 livereload: true
             },
-            build: {
+            dist: {
                 files: ['app/**'],
-                tasks: ['build']
+                tasks: ['dist']
             },
             devbuild: {
                 files: ['app/**/*.{html,htm,md,js,json,css,less,sass,scss,png,jpg,jpeg,gif,ico,webp,svg,woff,ttf,eot}', '!app/bower_components/**'],
@@ -153,12 +150,12 @@ module.exports = function (grunt) {
                     hostname: 'localhost'
                 }
             },
-            build: {
+            dist: {
                 options: {
                     port: 4000,
                     livereload: true,
                     open: true,
-                    base: 'build/',
+                    base: 'dist/',
                     hostname: 'localhost'
                 }
             }
@@ -166,21 +163,21 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask(
-        'build',
-        'Compiles all of the assets and copies the files to the build directory',
-        ['clean:build', 'dom_munger:build', 'copy:build', 'less:build', 'autoprefixer:build', 'cssmin', 'uglify']
+        'dist',
+        'Compiles all of the assets and copies the files to the dist directory',
+        ['clean:dist', 'dom_munger:dist', 'copy:dist', 'less:dist', 'autoprefixer:dist', 'cssmin', 'uglify', 'clean:diststylesheets', 'clean:distscripts']
     );
 
     grunt.registerTask(
         'devbuild',
         'Compiles all of the assets and copies the files to the devbuild directory',
-        ['clean:devbuild', 'dom_munger:devbuild', 'copy:devbuild', 'less:devbuild', 'autoprefixer:devbuild']
+        ['clean:devbuild', 'dom_munger:devbuild', 'copy:devbuild', 'less:devbuild', 'autoprefixer:devbuild', 'clean:devstylesheets']
     );
 
     grunt.registerTask(
-        'serve',
+        'servedist',
         'Watches the project for changes, automatically builds them and runs a server',
-        ['connect:build', 'watch:build']
+        ['connect:dist', 'watch:dist']
     );
 
     grunt.registerTask(
