@@ -68,11 +68,18 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
 
         this.copy('Gruntfile.js', 'Gruntfile.js');
         this.copy('.bowerrc', '.bowerrc');
+        this.copy('views/view1.html', 'app/views/view1.html');
+        this.copy('views/view2.html', 'app/views/view2.html');
 
         this.template('_package.json', 'package.json');
         this.template('_bower.json', 'bower.json');
-        this.template('_application.less', 'app/styles/application.less');
         this.template('_index.html', 'app/index.html');
+        this.template('styles/_application.less', 'app/styles/application.less');
+        this.template('scripts/_app.js', 'app/scripts/app.js');
+        this.template('scripts/_controllers.js', 'app/scripts/controllers/controllers.js');
+        this.template('scripts/_directives.js', 'app/scripts/directives/directives.js');
+        this.template('scripts/_filters.js', 'app/scripts/filters/filters.js');
+        this.template('scripts/_services.js', 'app/scripts/services/services.js');
     },
 
     projectfiles: function () {
