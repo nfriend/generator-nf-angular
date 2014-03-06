@@ -73,7 +73,6 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
         this.mkdir('app/views');
 
         this.copy('Gruntfile.js', 'Gruntfile.js');
-        this.copy('.bowerrc', '.bowerrc');
         this.copy('views/view1.html', 'app/views/view1.html');
         this.copy('views/view2.html', 'app/views/view2.html');
 
@@ -92,6 +91,8 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
     projectfiles: function () {
         this.copy('editorconfig', '.editorconfig');
         this.copy('jshintrc', '.jshintrc');
+        this.copy('bowerrc', '.bowerrc');
+        this.copy('gitignore', '.gitignore');
     }
 });
 
