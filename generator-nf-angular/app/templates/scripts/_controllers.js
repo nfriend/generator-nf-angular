@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('<%= _.camelize(_.slugify(appName)) %>.controllers', []).
+angular.module('<%= _.camelize(_.slugify(appName)) %>.controllers').
     controller('MyController1', [function () {
 
     }])
