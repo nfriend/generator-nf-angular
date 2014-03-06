@@ -38,7 +38,13 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
             message: 'What would you like to call your Angular app?',
             validate: function (input) {
                 if (!input || input === '') {
-                    return 'You app\'s name can\'t be empty.  Please enter a name.';
+                    return 'Your app\'s name can\'t be empty.  Please enter a name.';
+                }
+
+                // the next three rules ensure that a the slugified name is a valid CSS selector
+                // and that its camelcase'd version is a valid JavaScript variable name
+                if (! (/[a-zA-Z]/.test(input.substring(0, 1)))) {
+                    return "Your app\'s name must begin with a letter!";
                 }
 
                 return true;

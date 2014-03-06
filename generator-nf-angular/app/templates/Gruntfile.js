@@ -119,6 +119,19 @@ module.exports = function (grunt) {
             }
         },
 
+        jshint: {
+            dist: {
+                options: {
+                    jshintrc: '.jshintrc',
+                    reporter: require('jshint-stylish'),
+                    force: true
+                },
+                files: {
+                    src: ['app/scripts/**/*.js']
+                }
+            },
+        },
+
         uglify: {
             dist: {
                 src: '<%= dom_munger.data.jsRefs %>',
@@ -165,7 +178,7 @@ module.exports = function (grunt) {
     grunt.registerTask(
         'dist',
         'Compiles all of the assets and copies the files to the dist directory',
-        ['clean:dist', 'dom_munger:dist', 'copy:dist', 'less:dist', 'autoprefixer:dist', 'cssmin', 'uglify', 'clean:diststylesheets', 'clean:distscripts']
+        ['clean:dist', 'dom_munger:dist', 'copy:dist', 'less:dist', 'autoprefixer:dist', 'cssmin', 'jshint', 'uglify', 'clean:diststylesheets', 'clean:distscripts']
     );
 
     grunt.registerTask(
@@ -199,6 +212,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-dom-munger');
     grunt.loadNpmTasks('grunt-autoprefixer');
