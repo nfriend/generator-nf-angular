@@ -42,13 +42,13 @@ module.exports = function (grunt) {
         copy: {
             dist: {
                 cwd: 'app',
-                src: ['fonts/**', 'images/**'],
+                src: ['fonts/**', 'images/**', 'views/**', 'favicon.ico'],
                 dest: 'dist',
                 expand: true
             },
             devbuild: {
                 cwd: 'app',
-                src: ['<%= dom_munger.data.jsRefsWithoutPath %>', '<%= dom_munger.data.cssRefsWithoutPath %>', 'fonts/**', 'images/**', 'views/**'],
+                src: ['<%= dom_munger.data.jsRefsWithoutPath %>', '<%= dom_munger.data.cssRefsWithoutPath %>', 'fonts/**', 'images/**', 'views/**', 'favicon.ico'],
                 dest: 'devbuild',
                 expand: true
             },
