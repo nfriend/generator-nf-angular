@@ -15,6 +15,7 @@ module.exports = function (grunt) {
                     remove: ['link', 'script'],
                     append: [
                       { selector: 'head', html: '<link href="application.min.css" rel="stylesheet">' },
+                      { selector: 'head', html: '<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">' },
                       { selector: 'body', html: '<script src="application.min.js"></script>' }
                     ]
                 },
@@ -32,6 +33,7 @@ module.exports = function (grunt) {
                     remove: ['link'],
                     append: [
                       { selector: 'head', html: '<link href="application.css" rel="stylesheet">' },
+                      { selector: 'head', html: '<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">' },
                     ]
                 },
                 src: 'app/index.html',
@@ -148,8 +150,8 @@ module.exports = function (grunt) {
                 tasks: ['dist']
             },
             devbuild: {
-                files: ['app/**/*.{html,htm,md,js,json,css,less,sass,scss,png,jpg,jpeg,gif,ico,webp,svg,woff,ttf,eot}', '!app/bower_components/**'],
-                tasks: ['dom_munger', 'less:devbuild', 'autoprefixer:devbuild', 'copy:fonts', 'copy:images', 'copy:devbuild']
+                files: ['app/**/*.{html,htm,md,js,ts,json,css,less,sass,scss,png,jpg,jpeg,gif,ico,webp,svg,woff,ttf,eot}', '!app/bower_components/**'],
+                tasks: ['dom_munger', 'less:devbuild', 'autoprefixer:devbuild', 'copy:fonts', 'copy:images', 'copy:devbuild', 'typescript:devbuild']
             }
         },
 
@@ -158,7 +160,7 @@ module.exports = function (grunt) {
                 options: {
                     port: 4000,
                     livereload: true,
-                    open:true,
+                    open: true,
                     base: 'devbuild/',
                     hostname: 'localhost'
                 }
@@ -190,6 +192,23 @@ module.exports = function (grunt) {
                     browsers: ['PhantomJS']
                 }
             }
+        },
+
+        typescript: {
+            devbuild: {
+                src: ['app/scripts/**/*.ts'],
+                dest: 'devbuild/scripts',
+                options: {
+                    basePath: 'app/scripts'
+                }
+            }
+            //dist: {
+            //    src: ['app/scripts/**/*.ts'],
+            //    dest: 'dist/scripts',
+            //    options: {
+            //        basePath: 'app/scripts'
+            //    }
+            //}
         }
     });
 
@@ -204,7 +223,7 @@ module.exports = function (grunt) {
     grunt.registerTask(
         'devbuild',
         'Compiles all of the assets and copies the files to the devbuild directory',
-        ['clean:devbuild', 'dom_munger:devbuild', 'copy:devbuild', 'less:devbuild', 'autoprefixer:devbuild', 'clean:devstylesheets']
+        ['clean:devbuild', 'dom_munger:devbuild', 'copy:devbuild', 'typescript:devbuild', 'less:devbuild', 'autoprefixer:devbuild', 'clean:devstylesheets']
     );
 
     grunt.registerTask(
@@ -237,4 +256,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-dom-munger');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-typescript');
 };

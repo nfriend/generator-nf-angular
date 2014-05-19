@@ -49,10 +49,16 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
 
                 return true;
             }
+        }, {
+            type: 'confirm',
+            name: 'useTypeScript',
+            message: 'Would you like to use TypeScript?',
+            default: true
         }];
 
         this.prompt(prompts, function (props) {
             this.appName = props.appName;
+            this.useTypeScript = props.useTypeScript;
 
             done();
         }.bind(this));
@@ -60,6 +66,7 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
 
     app: function () {
         this.mkdir('app');
+        this.mkdir('test');
 
         this.mkdir('app/scripts');
         this.mkdir('app/scripts/controllers');
@@ -76,7 +83,6 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
         this.copy('views/view1.html', 'app/views/view1.html');
         this.copy('views/view2.html', 'app/views/view2.html');
 
-        this.template('_package.json', 'package.json');
         this.template('_bower.json', 'bower.json');
         this.template('_index.html', 'app/index.html');
         this.template('styles/_application.less', 'app/styles/application.less');
@@ -86,6 +92,15 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
         this.template('scripts/_directives.js', 'app/scripts/directives/directives.js');
         this.template('scripts/_filters.js', 'app/scripts/filters/filters.js');
         this.template('scripts/_services.js', 'app/scripts/services/services.js');
+        this.template('test/_sanity-check.test.js', 'test/sanity-check.test.js');
+
+        if (this.useTypeScript) {
+            this.copy('Gruntfile-ts.js', 'Gruntfile.js');
+            this.template('_package-ts.json', 'package.json');
+        } else {
+            this.copy('Gruntfile.js', 'Gruntfile.js');
+            this.template('_package.json', 'package.json');
+        }
     },
 
     projectfiles: function () {
