@@ -24,7 +24,8 @@
     "karma": "^0.12.16",
     "grunt-karma": "^0.8.3",
     "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma-phantomjs-launcher": "^0.1.4",
+    "grunt-contrib-htmlmin": "^0.3.0"
   },
   "engines": {
     "node": ">=0.8.0"

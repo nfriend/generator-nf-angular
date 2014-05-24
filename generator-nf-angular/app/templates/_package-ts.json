@@ -25,7 +25,8 @@
     "grunt-karma": "^0.8.3",
     "karma-jasmine": "^0.1.5",
     "karma-phantomjs-launcher": "^0.1.4",
-    "grunt-typescript": "^0.3.6"
+    "grunt-ts": "^1.11.2",
+    "grunt-contrib-htmlmin": "^0.3.0"
   },
   "engines": {
     "node": ">=0.8.0"

@@ -14,7 +14,8 @@ module.exports = function (grunt) {
                     ],
                     remove: ['link', 'script'],
                     append: [
-                      { selector: 'head', html: '<link href="application.min.css" rel="stylesheet">' },
+                      { selector: 'head', html: '<link href="application.min.css" rel="stylesheet" />' },
+                      { selector: 'head', html: '<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />' },
                       { selector: 'body', html: '<script src="application.min.js"></script>' }
                     ]
                 },
@@ -31,7 +32,8 @@ module.exports = function (grunt) {
                     ],
                     remove: ['link'],
                     append: [
-                      { selector: 'head', html: '<link href="application.css" rel="stylesheet">' },
+                      { selector: 'head', html: '<link href="application.css" rel="stylesheet" />' },
+                      { selector: 'head', html: '<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />' }
                     ]
                 },
                 src: 'app/index.html',
@@ -112,6 +114,19 @@ module.exports = function (grunt) {
             }
         },
 
+        htmlmin: {
+            dist: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+                expand: true,
+                cwd: 'dist',
+                src: ['**/*.html'],
+                dest: 'dist/'
+            }
+        },
+
         cssmin: {
             dist: {
                 src: 'dist/application.css',
@@ -158,7 +173,7 @@ module.exports = function (grunt) {
                 options: {
                     port: 4000,
                     livereload: true,
-                    open:true,
+                    open: true,
                     base: 'devbuild/',
                     hostname: 'localhost'
                 }
@@ -198,7 +213,7 @@ module.exports = function (grunt) {
     grunt.registerTask(
         'dist',
         'Compiles all of the assets and copies the files to the dist directory',
-        ['clean:dist', 'dom_munger:dist', 'copy:dist', 'less:dist', 'autoprefixer:dist', 'cssmin', 'jshint', 'test', 'uglify', 'clean:diststylesheets', 'clean:distscripts']
+        ['clean:dist', 'dom_munger:dist', 'copy:dist', 'less:dist', 'autoprefixer:dist', 'cssmin', 'jshint', 'test', 'uglify', 'htmlmin:dist', 'clean:diststylesheets', 'clean:distscripts']
     );
 
     grunt.registerTask(
@@ -237,4 +252,5 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-dom-munger');
     grunt.loadNpmTasks('grunt-autoprefixer');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
 };

@@ -43,7 +43,7 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
 
                 // the next three rules ensure that a the slugified name is a valid CSS selector
                 // and that its camelcase'd version is a valid JavaScript variable name
-                if (! (/[a-zA-Z]/.test(input.substring(0, 1)))) {
+                if (!(/[a-zA-Z]/.test(input.substring(0, 1)))) {
                     return "Your app\'s name must begin with a letter!";
                 }
 
@@ -86,20 +86,36 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
         this.template('_bower.json', 'bower.json');
         this.template('_index.html', 'app/index.html');
         this.template('styles/_application.less', 'app/styles/application.less');
-        this.template('scripts/_app.js', 'app/scripts/app.js');
-        this.template('scripts/_modules.js', 'app/scripts/modules.js');
-        this.template('scripts/_controllers.js', 'app/scripts/controllers/controllers.js');
-        this.template('scripts/_directives.js', 'app/scripts/directives/directives.js');
-        this.template('scripts/_filters.js', 'app/scripts/filters/filters.js');
-        this.template('scripts/_services.js', 'app/scripts/services/services.js');
-        this.template('test/_sanity-check.test.js', 'test/sanity-check.test.js');
 
         if (this.useTypeScript) {
+            this.mkdir('app/scripts/definitions');
+
             this.copy('Gruntfile-ts.js', 'Gruntfile.js');
+            this.copy('scripts/definitions/references.d.ts', 'app/scripts/definitions/references.d.ts');
+
+            this.directory('scripts/definitions/angularjs', 'app/scripts/definitions/angularjs');
+            this.directory('scripts/definitions/jasmine', 'app/scripts/definitions/jasmine');
+            this.directory('scripts/definitions/jquery', 'app/scripts/definitions/jquery');
+
             this.template('_package-ts.json', 'package.json');
+            this.template('scripts/_app.ts', 'app/scripts/app.ts');
+            this.template('scripts/_modules.ts', 'app/scripts/modules.ts');
+            this.template('scripts/controllers/_controllers.ts', 'app/scripts/controllers/controllers.ts');
+            this.template('scripts/directives/_directives.ts', 'app/scripts/directives/directives.ts');
+            this.template('scripts/filters/_filters.ts', 'app/scripts/filters/filters.ts');
+            this.template('scripts/services/_services.ts', 'app/scripts/services/services.ts');
+            this.template('test/_sanity-check.test.ts', 'test/sanity-check.test.ts');
         } else {
             this.copy('Gruntfile.js', 'Gruntfile.js');
+
             this.template('_package.json', 'package.json');
+            this.template('scripts/_app.js', 'app/scripts/app.js');
+            this.template('scripts/_modules.js', 'app/scripts/modules.js');
+            this.template('scripts/_controllers.js', 'app/scripts/controllers/controllers.js');
+            this.template('scripts/_directives.js', 'app/scripts/directives/directives.js');
+            this.template('scripts/_filters.js', 'app/scripts/filters/filters.js');
+            this.template('scripts/_services.js', 'app/scripts/services/services.js');
+            this.template('test/_sanity-check.test.js', 'test/sanity-check.test.js');
         }
     },
 
