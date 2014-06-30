@@ -111,10 +111,10 @@ var NfAngularGenerator = yeoman.generators.Base.extend({
             this.template('_package.json', 'package.json');
             this.template('scripts/_app.js', 'app/scripts/app.js');
             this.template('scripts/_modules.js', 'app/scripts/modules.js');
-            this.template('scripts/_controllers.js', 'app/scripts/controllers/controllers.js');
-            this.template('scripts/_directives.js', 'app/scripts/directives/directives.js');
-            this.template('scripts/_filters.js', 'app/scripts/filters/filters.js');
-            this.template('scripts/_services.js', 'app/scripts/services/services.js');
+            this.template('scripts/controllers/_controllers.js', 'app/scripts/controllers/controllers.js');
+            this.template('scripts/directives/_directives.js', 'app/scripts/directives/directives.js');
+            this.template('scripts/filters/_filters.js', 'app/scripts/filters/filters.js');
+            this.template('scripts/services/_services.js', 'app/scripts/services/services.js');
             this.template('test/_sanity-check.test.js', 'test/sanity-check.test.js');
         }
     },
